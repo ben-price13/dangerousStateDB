@@ -1,0 +1,27 @@
+# Proposal:
+I propose to use information from the US Census, the National Highway Traffic Safety Administration, and the Murder Accountability Project to build a database.  The goal will be to utilize JOINS among the different relations in order to determine any correlations between a given state, its homicide rate, and its fatal traffic accident rates.  In this way, I should be able to view growing or shrinking trends over time by state for types of non-medical-related mortality, but also view comprehensive information about which states were the most dangerous of them all between 2010 and 2019!
+
+Based on the data I have retrieved, the user will be able to pull data based on any number of filters, such as reporting agency using an attribute such as ORI ( originating agency ), state, year, etc.  Additionally, population information can be taken into account, including total deaths in a given year, total populations in a state over a series of years between 2010 and 2019, etc.  Finally, additionally data will be able to be added or deleted without interfering with the provided constraints in the relations by way of triggers.  If something cannot be deleted, an error will be reported to the user with the reason. 
+
+The data will be stored using MySQL on Google Cloud Platform because I would like to become more familiar with database hosting platforms and a team member in another class said it worked pretty well.  This specific platform will help me learn to query a database over the internet which will allow portability for my project.  I will author a JupyterLab notebook in order to create scripts that query the data to show the possible relationships between the different relations.  This project will help me learn how to link multiple disparate data sets and draw conclusions that no single data set would be able to answer alone.  Fingers crossed that Colorado isn’t the most dangerous state!
+
+SQL Interface: SQL Alchemy with a MySQL Database.  This was the interface that I used in lab 4 to connect to a MySQL database on the Google Cloud platform and it seemed to work really well.  SQL Alchemy will allow python functionality to assist in performing the usual SQL queries, which will be useful when having to insert multiple rows into a table of data that is randomly generated at runtime.  The full explanation of SQL Alchemy features can be found here: https://www.sqlalchemy.org/features.html
+
+## Tools: 
+Google Cloud Platform as a host: This will provide global access to the database so the project can be accessed from any user with the appropriate passwords and permissions.
+MySQL Database
+Python Notebook crafted to demonstrate project features (in lieu of an online user interface)
+	
+## Cleaning the Data:
+The data as-is will not be ideal for the project.  Some of the data will be NULL, some data will be redundant, and other data will simply not be useful for the scope of this project.  For NULL data, I will include the data as such with the exception of predominately NULL columns (>50% NULL).  If a column is predominantly NULL, it will be deemed as not useful for the project.  Any columns (including NULL columns) that are not useful will be discarded.  Redundant data will be analyzed by their functional dependencies to see if decomposition can alleviate them.  One example is Ori, Agency, State, County data that often is repeated among multiple rows in two of the relations.  This data will be extrapolated into its own table to avoid any future deletion or insertion anomalies from cropping up.
+
+## Table Creation:
+The raw data are all in .csv formatted files.  A python script will be created to clean and initialize the data into tables, with their specified keys, triggers, and constraints.  The script will be in addition to the separate Python Notebook file being used to demonstrate the project.  While the final script will only need to be run once to initialize the Database on the Google Cloud, it will be useful to have the script in the case that the Database needs to be recreated from scratch at any time while testing, for instance if the database becomes corrupted.  This will also be useful while demonstrating the project to save time.  The database will already be created and preserved before the user opens up and works through the Jupyterlab.
+
+## Functionality:
+The main goal of this project is to implement a database where the user can view possible relationships among the disparate data of murders and fatal accidents in order to examine how dangerous a given state may be.  As such, the JupyterLab Python Notebook will demonstrate the various meaningful JOINS that can be done among the relations, such as implementing a JOIN to show percentages of murders out of the total population over the years 2010 - 2019 in a given state, or by showing deaths by traffic fatalities and murders combined for November of 2016 once a new US president had been elected.  Additionally, sample data will be shown to be inserted and deleted from the tables to demonstrate the triggers and constraints being maintained, ensuring the integrity of the database.
+
+## Data:
+- Murders By Year/State (UCR - Uniform Crime Report) & Individual Murder Cases (SHR - Supplemental Homicide Report): http://www.murderdata.org/p/data-docs.html
+- Census Population Data 2010 - 2019 (NST-EST2019-alldata) https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
+- Fatality and Injury Reporting System Tool (FIRST) https://cdan.dot.gov/query
